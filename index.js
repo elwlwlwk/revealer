@@ -12,7 +12,7 @@ app.get("/:tokenId", async (req, res) => {
   try {
     if (!parseInt(tokenId)) throw `invalid token id: ${tokenId}`;
     const metadata = await (
-      await fetch(`https://puu.by-syl.com/json/${tokenId}.json`)
+      await fetch(`https://belly.bellygom.world/${tokenId}.json`)
     ).json();
     res.json(metadata);
   } catch (e) {

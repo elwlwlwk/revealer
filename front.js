@@ -21,7 +21,7 @@ async function getData(cursor) {
       collectionQuery: null,
       collectionSortBy: null,
       collections: ["bellygom-world-official"],
-      count: 5,
+      count: 20,
       cursor: cursor,
       includeHiddenCollections: null,
       numericTraits: null,
@@ -83,9 +83,7 @@ async function getOnSale() {
       const data = await getData(cursor);
       items = [...items, ...data.query.search.edges];
       cursor = data.query.search.pageInfo.endCursor;
-      //hasNextPage = data.query.search.pageInfo.hasNextPage;
-      hasNextPage = false;
-      break;
+      hasNextPage = data.query.search.pageInfo.hasNextPage;
     }
   } catch (e) {
     console.error(e);
@@ -134,7 +132,7 @@ function isTarget(metadata, rarity) {
     .join(",");
   if (traitValues.includes(rarity)) return true;
 
-  return true;
+  return false;
 }
 
 async function buyProcess(targets) {
@@ -182,6 +180,8 @@ async function monitor() {
     }
   });
 
+  const beepInterval = setInterval(beep, 1000);
+  setTimeout(() => clearInterval(beepInterval), 5000);
   await buyProcess(targets);
 }
 
